@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rubik's Cube Solver | ADA Mini Project</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="topbar">
+            <a class="brand" href="#app" aria-label="Rubik's Cube Solver home">
+                <span class="brand-mark"></span>
+                <span>
+                    <strong>CubeOpt</strong>
+                    <small>ADA Solver</small>
+                </span>
+            </a>
+            <nav class="nav-links" aria-label="Project sections">
+                <a href="#cube-input">Color Input</a>
+                <a href="#algorithms">Algorithms</a>
+                <a href="#complexity">Complexity</a>
+                <a href="#documentation">Documentation</a>
+            </nav>
+            <span class="status-pill" id="backendStatus">Checking backend</span>
+        </header>
+
+        <main>
+            <section class="hero" id="app">
+                <div class="hero-copy">
+                    <p class="eyebrow">Analysis and Design of Algorithms Mini Project</p>
+                    <h1>Rubik's Cube Solver</h1>
+                    <p class="intro">
+                        An interactive solver website backed by C++ search algorithms, graph traversal,
+                        backtracking, heuristics, and ADA complexity analysis.
+                    </p>
+                    <div class="control-panel">
+                        <div class="form-row">
+                            <label for="algorithmSelect">Algorithm</label>
+                            <select id="algorithmSelect">
+                                <option value="astar">A*</option>
+                                <option value="iddfs">IDDFS</option>
+                                <option value="bfs">BFS</option>
+                                <option value="dfs">DFS</option>
+                                <option value="backtracking">Backtracking</option>
+                                <option value="branch and bound">Branch and Bound</option>
+                                <option value="greedy">Greedy</option>
+                                <option value="heuristic search">Heuristic Search</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <label for="depthInput">Search Depth</label>
+                            <input id="depthInput" type="number" min="0" max="10" value="7">
+                        </div>
+                        <div class="button-grid">
+                            <button class="btn secondary" id="shuffleBtn" type="button">Shuffle Cube</button>
+                            <button class="btn primary" id="solveBtn" type="button">Solve Cube</button>
+                            <button class="btn ghost" id="resetBtn" type="button">Reset Cube</button>
+                            <button class="btn secondary" id="randomBtn" type="button">Generate Random Cube</button>
+                        </div>
+                    </div>
+                    <div class="stats-grid" aria-label="Solver statistics">
+                        <article>
+                            <span>Total Moves</span>
+                            <strong id="moveCounter">0</strong>
+                        </article>
+                        <article>
+                            <span>Time Taken</span>
+                            <strong id="timeTaken">0 ms</strong>
+                        </article>
+                        <article>
+                            <span>Algorithm</span>
+                            <strong id="algorithmUsed">A*</strong>
+                        </article>
+                        <article>
+                            <span>Nodes</span>
+                            <strong id="nodesExpanded">0</strong>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="cube-workbench">
+                    <div class="scene-toolbar">
+                        <span id="cubeStateLabel">Solved State</span>
+                        <button class="mini-btn" id="playSolutionBtn" type="button">Play Steps</button>
+                    </div>
+                    <div class="scene" aria-label="3D Rubik's Cube visualization">
+                        <div class="cube-stage" id="cubeStage"></div>
+                    </div>
+                    <p class="solver-message" id="solverMessage">Ready to scramble, edit colors, or solve.</p>
+                </div>
+            </section>
+
+            <section class="two-column" id="cube-input">
+                <div class="panel">
+                    <div class="section-heading">
+                        <p class="eyebrow">Manual State Entry</p>
+                        <h2>Color Input System</h2>
+                    </div>
+                    <div class="palette" id="palette" aria-label="Sticker color palette"></div>
+                    <div class="cube-net" id="cubeNet" aria-label="2D cube net color editor"></div>
+                    <div class="validation-row">
+                        <span id="validationStatus">Valid solved cube.</span>
+                        <button class="mini-btn" id="validateBtn" type="button">Validate</button>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="section-heading">
+                        <p class="eyebrow">Step-by-Step Output</p>
+                        <h2>Move History</h2>
+                    </div>
+                    <div class="history-box">
+                        <div>
+                            <span>Scramble History</span>
+                            <ol id="historyList"></ol>
+                        </div>
+                        <div>
+                            <span>Solution Steps</span>
+                            <ol id="solutionList"></ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel" id="algorithms">
+                <div class="section-heading">
+                    <p class="eyebrow">ADA Algorithms</p>
+                    <h2>Algorithm Explanation</h2>
+                </div>
+                <div class="algorithm-grid" id="algorithmGrid"></div>
+            </section>
+
+            <section class="two-column" id="complexity">
+                <div class="panel">
+                    <div class="section-heading">
+                        <p class="eyebrow">Performance</p>
+                        <h2>Speed Comparison Chart</h2>
+                    </div>
+                    <div class="chart" id="comparisonChart"></div>
+                </div>
+
+                <div class="panel">
+                    <div class="section-heading">
+                        <p class="eyebrow">Complexity</p>
+                        <h2>Time and Space Analysis</h2>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Algorithm</th>
+                                    <th>Time</th>
+                                    <th>Space</th>
+                                </tr>
+                            </thead>
+                            <tbody id="complexityTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel" id="documentation">
+                <div class="section-heading">
+                    <p class="eyebrow">Project Documentation</p>
+                    <h2>Architecture and Flow</h2>
+                </div>
+                <div class="doc-grid">
+                    <article>
+                        <h3>System Architecture</h3>
+                        <p>Frontend HTML, CSS, and JavaScript maintain the cube UI. Flask receives the cube state and executes the C++ solver. The C++ layer validates state, explores graph nodes, and returns JSON solution steps.</p>
+                    </article>
+                    <article>
+                        <h3>Data Structures</h3>
+                        <p>Queue, stack, arrays, sets, hash maps, graph state nodes, and recursive search trees are used across the solver modules.</p>
+                    </article>
+                    <article>
+                        <h3>Real-World Applications</h3>
+                        <p>Robotics path planning, game AI, network routing, logistics optimization, puzzle solving, and decision support systems use the same search and pruning ideas.</p>
+                    </article>
+                </div>
+                <div class="flowchart" aria-label="Project flowchart">
+                    <span>Cube Input</span>
+                    <b></b>
+                    <span>Flask API</span>
+                    <b></b>
+                    <span>C++ ADA Solver</span>
+                    <b></b>
+                    <span>JSON Steps</span>
+                    <b></b>
+                    <span>3D Animation</span>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
