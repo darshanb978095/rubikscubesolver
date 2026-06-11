@@ -1,0 +1,39 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build C++ Solver",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-std=c++17",
+                "-O2",
+                "-Wall",
+                "-Wextra",
+                "backend/solver.cpp",
+                "backend/algorithms/bfs.cpp",
+                "backend/algorithms/dfs.cpp",
+                "backend/algorithms/astar.cpp",
+                "backend/algorithms/backtracking.cpp",
+                "backend/algorithms/branch_bound.cpp",
+                "backend/algorithms/greedy.cpp",
+                "backend/algorithms/heuristic.cpp",
+                "backend/algorithms/iddfs.cpp",
+                "-o",
+                "backend/solver.exe"
+            ],
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Run Flask Backend",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "backend/server.py"
+            ],
+            "isBackground": true,
+            "problemMatcher": []
+        }
+    ]
+}
